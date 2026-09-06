@@ -2,6 +2,8 @@
 
 **A transparent Python workbench for bond valuation, yield-curve calibration and interest-rate risk.**
 
+[🚀 Open the interactive demo][(https://URL-CORRESPONDIENTE.streamlit.app]
+
 Built for finance and risk interviews: inspect each cash flow, reproduce the calibration, distinguish yield risk from curve risk, and explain the numerical choices. The core engine uses only Python's standard library. Streamlit and Plotly provide the interactive interface; SciPy is used only as a test benchmark.
 
 ## Run in three commands
