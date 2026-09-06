@@ -4,7 +4,7 @@
 
 [🚀 Open the interactive demo](https://fixed-income-analytics-joan.streamlit.app)
 
-Built for finance and risk interviews: inspect each cash flow, reproduce the calibration, distinguish yield risk from curve risk, and explain the numerical choices. The core engine uses only Python's standard library. Streamlit and Plotly provide the interactive interface; SciPy is used only as a test benchmark.
+Inspect each cash flow, reproduce the calibration, distinguish yield risk from curve risk and review the numerical choices. The core engine uses only Python's standard library. Streamlit and Plotly provide the interactive interface; SciPy is used only as a test benchmark.
 
 ## Run in three commands
 
@@ -42,7 +42,7 @@ For a core-only installation, `pip install .` has **zero runtime dependencies**.
 | Interactive analysis | Curve plots, risk decomposition, 3D maturity/shock surface | Streamlit app test with changed widgets |
 | Engineering | Immutable models, type hints, strict typing, packaging, CI | pytest, coverage gate, Ruff, mypy, wheel build |
 
-## A two-minute demo for an interviewer
+## Interactive workflow
 
 1. Open **Yield curves** and explain why par coupons differ from spot rates.
 2. Expand calibration inputs, change the 5Y par coupon, and inspect repricing residuals.
@@ -80,7 +80,6 @@ src/fixed_income/
     demo.py                 Synthetic fixtures and installed CLI
  tests/                     Financial, benchmark and dashboard tests
  docs/METHODOLOGY.md         Formulas, conventions and numerical tradeoffs
- .github/workflows/ci.yml    Python 3.11 / 3.12 / 3.13 quality checks
 ```
 
 The dependency direction is UI → analytics → standard library. The engine has no Streamlit, pandas, Plotly or SciPy imports. Frozen dataclasses make model state explicit and deterministic.
@@ -109,29 +108,11 @@ pytest
 python -m build
 ```
 
-Tests include analytic identities, negative yields, finite-difference derivatives, sparse bootstrapping, repricing, external SciPy solver comparisons, invalid inputs and UI interaction. Coverage must exceed 90% of the analytics package. GitHub Actions repeats these checks across three Python versions. SciPy validates numerical roots independently; analytical identities provide checks that do not reuse the pricing implementation. This is not a QuantLib or real-market validation claim.
+Tests include analytic identities, negative yields, finite-difference derivatives, sparse bootstrapping, repricing, external SciPy solver comparisons, invalid inputs and UI interaction. Coverage must exceed 90% of the analytics package. SciPy validates numerical roots independently; analytical identities provide checks that do not reuse the pricing implementation. This is not a QuantLib or real-market validation claim.
 
-## Publish to your GitHub
+## Model scope
 
-Create an empty repository named `fixed-income-analytics`, then run from this folder:
-
-```bash
-git init -b main
-git add .
-git commit -m "Build fixed-income pricing and risk workbench"
-git remote add origin https://github.com/YOUR_USERNAME/fixed-income-analytics.git
-git push -u origin main
-```
-
-Suggested repository description: “Dependency-free bond pricing and curve bootstrapping engine with duration, convexity, DV01 and an interactive Streamlit risk dashboard.”
-
-Suggested topics: `python`, `fixed-income`, `quantitative-finance`, `risk-management`, `yield-curve`, `streamlit`, `plotly`.
-
-For Streamlit Community Cloud, select this repository, `app.py` and Python 3.12. Root `requirements.txt` installs the local package and UI dependencies. No secrets or market-data keys are required. Hosting has not been performed as part of this local deliverable.
-
-## Scope and next steps
-
-This is an educational portfolio analytics engine, not a production trading system. It intentionally omits actual-date schedules, holiday calendars, day-count conventions, settlement lags, accrued interest between coupon dates, stubs, ex-coupon treatment, default/recovery, callable bonds and multi-curve swap valuation. A strong next extension is actual-date cash-flow scheduling with an independent QuantLib benchmark using aligned conventions.
+The engine focuses on regular fixed-coupon bonds and deterministic yield curves. It omits actual-date schedules, holiday calendars, day-count conventions, settlement lags, accrued interest between coupon dates, stubs, ex-coupon treatment, default/recovery, callable bonds and multi-curve swap valuation. A natural extension is actual-date cash-flow scheduling with an independent QuantLib benchmark using aligned conventions.
 
 ## References
 
